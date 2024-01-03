@@ -1,0 +1,133 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+class Student {
+private:
+    std::string fullName;
+    std::string birthDate;
+    std::string contactPhone;
+    std::string city;
+    std::string country;
+    std::string institutionName;
+    std::string institutionCity;
+    std::string institutionCountry;
+    std::string groupNumber;
+
+public:
+    Student() {}
+
+    void inputData() {
+        std::cout << "Enter Full Name: ";
+        std::getline(std::cin, fullName);
+        std::cout << "Enter Birth Date: ";
+        std::getline(std::cin, birthDate);
+        std::cout << "Enter Contact Phone: ";
+        std::getline(std::cin, contactPhone);
+        std::cout << "Enter City: ";
+        std::getline(std::cin, city);
+        std::cout << "Enter Country: ";
+        std::getline(std::cin, country);
+        std::cout << "Enter Institution Name: ";
+        std::getline(std::cin, institutionName);
+        std::cout << "Enter Institution City: ";
+        std::getline(std::cin, institutionCity);
+        std::cout << "Enter Institution Country: ";
+        std::getline(std::cin, institutionCountry);
+        std::cout << "Enter Group Number: ";
+        std::getline(std::cin, groupNumber);
+    }
+
+    void displayData() {
+        std::cout << "\nStudent Information:\n";
+        std::cout << "Full Name: " << fullName << "\n";
+        std::cout << "Birth Date: " << birthDate << "\n";
+        std::cout << "Contact Phone: " << contactPhone << "\n";
+        std::cout << "City: " << city << "\n";
+        std::cout << "Country: " << country << "\n";
+        std::cout << "Institution Name: " << institutionName << "\n";
+        std::cout << "Institution City: " << institutionCity << "\n";
+        std::cout << "Institution Country: " << institutionCountry << "\n";
+        std::cout << "Group Number: " << groupNumber << "\n";
+    }
+
+    std::string getFullName() const { return fullName; }
+    std::string getBirthDate() const { return birthDate; }
+    std::string getContactPhone() const { return contactPhone; }
+    std::string getCity() const { return city; }
+    std::string getCountry() const { return country; }
+    std::string getInstitutionName() const { return institutionName; }
+    std::string getInstitutionCity() const { return institutionCity; }
+    std::string getInstitutionCountry() const { return institutionCountry; }
+    std::string getGroupNumber() const { return groupNumber; }
+};
+
+class Point {
+private:
+    double x;
+    double y;
+    double z;
+
+public:
+    Point() : x(0.0), y(0.0), z(0.0) {}
+
+    void inputCoordinates() {
+        std::cout << "Enter X coordinate: ";
+        std::cin >> x;
+        std::cout << "Enter Y coordinate: ";
+        std::cin >> y;
+        std::cout << "Enter Z coordinate: ";
+        std::cin >> z;
+    }
+
+    void displayCoordinates() {
+        std::cout << "\nPoint Coordinates:\n";
+        std::cout << "X: " << x << "\n";
+        std::cout << "Y: " << y << "\n";
+        std::cout << "Z: " << z << "\n";
+    }
+
+    double getX() const { return x; }
+    double getY() const { return y; }
+    double getZ() const { return z; }
+
+    void saveToFile(const std::string& filename) {
+        std::ofstream file(filename);
+        if (file.is_open()) {
+            file << x << " " << y << " " << z;
+            file.close();
+        }
+        else {
+            std::cerr << "Unable to open the file for writing.\n";
+        }
+    }
+
+    void loadFromFile(const std::string& filename) {
+        std::ifstream file(filename);
+        if (file.is_open()) {
+            file >> x >> y >> z;
+            file.close();
+        }
+        else {
+            std::cerr << "Unable to open the file for reading.\n";
+        }
+    }
+};
+
+int main() {
+    Student student;
+    student.inputData();
+    student.displayData();
+
+    Point point;
+    point.inputCoordinates();
+    point.displayCoordinates();
+
+    point.saveToFile("point.txt");
+    Point loadedPoint;
+    loadedPoint.loadFromFile("point.txt");
+    std::cout << "\nLoaded Point from file:\n";
+    loadedPoint.displayCoordinates();
+
+    return 0;
+}
